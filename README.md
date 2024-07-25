@@ -1,4 +1,4 @@
-# .NET MAUI Weather APP
+# .NET MAUI Weather App
 
 Creating a Weather Application using .NET MAUI and API
 <br><br>
