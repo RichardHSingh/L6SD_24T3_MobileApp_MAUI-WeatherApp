@@ -14,5 +14,12 @@ The application should cover the following details:
 • Weather icon to represent current weather<br>
 • Fetching weather data based on city name instead of lat/long <br>
 <br><br>
+
 # Tutorial
-https://www.youtube.com/watch?v=3M2ckIi896s
+<strong>Coding Droplets</strong><br>
+https://www.youtube.com/watch?v=zO2MfIjopUg&t=15s
+<br><br>
+
+# API
+<strong>WeatherStack</strong><br>
+https://weatherstack.com/?utm_source=FirstPromoter&utm_medium=Affiliate&fpr=codingdroplets
