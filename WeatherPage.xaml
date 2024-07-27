@@ -7,7 +7,7 @@
     <!--Adding five rows that has auto sized-->
     <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto"
           RowSpacing="20"
-          BackgroundColor="Beige">
+          BackgroundColor="LightSteelBlue">
         
         <!-- ====== SECTION 1: LOCATION AND SEARCH ====== -->
         <StackLayout Grid.Row="0"
@@ -19,7 +19,7 @@
                    CornerRadius="35"
                    HasShadow="True"
                    BorderColor="DarkSlateGrey"
-                   BackgroundColor="LightYellow">
+                   BackgroundColor="Beige">
                 
                 <Label Text="Current Location"                       
                        FontSize="Default"/>
@@ -39,19 +39,20 @@
         <StackLayout Grid.Row="1"
                      Orientation="Vertical">
 
-            <Label x:Name="labelCity"
+            <Label x:Name="CityLbl"
                    FontAttributes="Bold"
                    FontFamily="Times New Roman"
                    FontSize="40"
                    HorizontalOptions="Center"
-                   TextColor="Black"
-                   Text="Auckland"/> <!--testing purpose hardcoded - will change once API integrated-->
+                   TextColor="Black"/>
+            <!--Text="Auckland" ==> testing purpose hardcoded - will change once API integrated-->
 
-            <Label x:Name="labelWeatherDescription"
-                   FontSize="Medium"
+            <Label x:Name="WeatherDescriptionLbl"
+                   FontSize="Subtitle"
+                   FontAttributes="Bold"
                    HorizontalOptions="Center"
-                   TextColor="SaddleBrown"
-                   Text="sunny"/> <!--testing purpose hardcoded - will change once API integrated-->
+                   TextColor="Black"/>
+            <!--Text="sunny" testing purpose hardcoded - will change once API integrated-->
 
         </StackLayout>
 
@@ -59,48 +60,110 @@
         <Image Grid.Row="2"
                x:Name="ImgWeatherIcon"
                VerticalOptions="Start"
-               HeightRequest="350"
-               WidthRequest="350"
-               Source="sunny.png"/>
+               HeightRequest="300"
+               WidthRequest="300"/>
 
 
-        <!-- ====== SECTION 4:  ====== -->
+        <!-- ====== SECTION 4: COLLECTION OF TEMP ====== -->
         <Grid Grid.Row="3"
               RowDefinitions="Auto,Auto"               
-              ColumnDefinitions="0.33*,0.33*,0.33*"
+              ColumnDefinitions="0.25*,0.5*,0.25*"
               Margin="20">
+
+            <StackLayout Grid.Row="0"
+                         Grid.Column="0"
+                         Spacing="8">
+
+                <Image HorizontalOptions="Center"
+                       HeightRequest="45"
+                       Source="humidity.png"/>
+
+                <Label x:Name="HumidityLbl"
+                       FontAttributes="Bold"
+                       Grid.Row="1"
+                       HorizontalOptions="Center"/>
+                                
+
+            </StackLayout>
             
-        <StackLayout >
-
-            <Image Grid.Row="0"
-                   Grid.Column="0"
-                   HorizontalOptions="Center"
-                   HeightRequest="25"
-                   Source="humidity.png"/>
             
-            <Label x:Name="LblHumidity"
-                   Grid.Row="1"
-                   Grid.Column="0"
-                   HorizontalOptions="Center"
-                   Text="88"/>
+            <StackLayout Grid.Column="1"
+                         Grid.RowSpan="2"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center">
+            
+                <Label x:Name="TempLbl"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       FontSize="60"
+                       FontAttributes="Bold"/>
+                
+            </StackLayout>
 
-            <Label x:Name="LblTemp"
-                   Grid.Row="0"
-                   Grid.Column="2"
-                   Grid.RowSpan="2"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   FontSize="40"
-                   FontAttributes="Bold"
-                   Text="69"/>
+            <StackLayout Grid.Row="0"
+                         Grid.Column="2"
+                         Spacing="5">
 
+                <Image HorizontalOptions="Center"
+                       HeightRequest="45"
+                       Source="windy.png"/>
 
-        </StackLayout>
+                <Label x:Name="WindLbl"
+                       Grid.Row="1"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"/>  
 
-             
-
-
+            </StackLayout>
         </Grid>
+
+        <!--collection of temp/icon decpicting what the forecast will be throughout hte day-->
+        <CollectionView x:Name="cvWeather"
+                        Grid.Row="4"
+                        HeightRequest="100">
+
+            <CollectionView.ItemsLayout>
+                
+                <!--will show towards bottom and user can scroll left to right-->
+                <LinearItemsLayout Orientation="Horizontal"
+                                   ItemSpacing="20"/>
+                
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate>
+
+                    <!--Grid has three controls-->
+                    <Grid Grid.Row="4"
+                          RowDefinitions="Auto,Auto,Auto">
+
+                        <!--CONTROL 1: WEATHER ICON/IMAGE-->
+                        <Image Grid.Row="0"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Start"
+                               HeightRequest="50"
+                               WidthRequest="50"
+                               Source="{Binding weather[0].customIcon}"/>
+
+                        <!--CONTROL 2: TEMP at given time and date-->
+                        <Label Grid.Row="1"
+                               FontSize="Large"
+                               HorizontalOptions="Center"
+                               Text="{Binding main.temperature, StringFormat='{0}°'} "/>
+
+                        <!--CONTROL 3: DATE AND TIME-->
+                        <Label Grid.Row="2"
+                               FontSize="Small"
+                               HorizontalOptions="Center"
+                               Text="{Binding dateTime}"/>
+
+                    </Grid>
+                    
+                </DataTemplate>
+                
+            </CollectionView.ItemTemplate>
+            
+        </CollectionView>
 
     </Grid>
 </ContentPage>

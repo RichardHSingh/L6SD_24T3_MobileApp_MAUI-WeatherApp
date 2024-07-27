@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
 
 namespace WeatherApp.Models
 {
@@ -33,6 +34,7 @@ namespace WeatherApp.Models
     public class List
     {
         public int dt { get; set; }
+        public string dateTime => UtcTimeLibrary.UtcTimeStamp.ConvertToUtc(dt); // allows one to read time as humans would not just digits
         public Main main { get; set; }
         public List<Weather> weather { get; set; }
         public Clouds clouds { get; set; }
@@ -47,6 +49,9 @@ namespace WeatherApp.Models
     public class Main
     {
         public double temp { get; set; }
+
+        // Math is c# class that rounds of the number to closest whole number
+        public double temperature => Math.Round(temp);
         public double feels_like { get; set; }
         public double temp_min { get; set; }
         public double temp_max { get; set; }
@@ -83,6 +88,10 @@ namespace WeatherApp.Models
         public string main { get; set; }
         public string description { get; set; }
         public string icon { get; set; }
+
+        //public string fullIconUrl => string.Format("https://openweathermap.org/img/wn/{0}@2x.png", icon);
+
+        public string customIcon => string.Format("icon_{0}.png", icon);
     }
 
     public class Wind
@@ -91,6 +100,8 @@ namespace WeatherApp.Models
         public int deg { get; set; }
         public double gust { get; set; }
     }
+
+
 
 
 }

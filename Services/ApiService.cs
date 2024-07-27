@@ -19,7 +19,7 @@ namespace WeatherApp.Services
             var httpClient = new HttpClient();
 
             // will get request from given URL
-            var response = await httpClient.GetStringAsync(string.Format("https://api.openweathermap.org/data/2.5/forecast?lat={0}&lon={1}&appid=9787719d93919bf24ba94a8bbfece6a2",latitute, longitude));
+            var response = await httpClient.GetStringAsync(string.Format("https://api.openweathermap.org/data/2.5/forecast?lat={0}&lon={1}&units=metric&appid=9787719d93919bf24ba94a8bbfece6a2", latitute, longitude));
 
             // maps this json response variable to the Root class recreated earlier --> Root class = parent class
             return JsonConvert.DeserializeObject<Root>(response);
@@ -34,10 +34,12 @@ namespace WeatherApp.Services
             var httpClient = new HttpClient();
 
             // will get request from given URL
-            var response = await httpClient.GetStringAsync(string.Format("api.openweathermap.org/data/2.5/forecast?q={0}&appid=9787719d93919bf24ba94a8bbfece6a2", city));
+            var response = await httpClient.GetStringAsync(string.Format("api.openweathermap.org/data/2.5/forecast?q={0}&units=metric&appid=9787719d93919bf24ba94a8bbfece6a2", city));
 
             // maps this json response variable to the Root class recreated earlier --> Root class = parent class
             return JsonConvert.DeserializeObject<Root>(response);
         }
     }
+
+   
 }
