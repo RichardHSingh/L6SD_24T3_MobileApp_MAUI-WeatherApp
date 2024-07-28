@@ -7,7 +7,7 @@
     <!--Adding five rows that has auto sized-->
     <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto"
           RowSpacing="20"
-          BackgroundColor="LightSteelBlue">
+          BackgroundColor="Turquoise">
         
         <!-- ====== SECTION 1: LOCATION AND SEARCH ====== -->
         <StackLayout Grid.Row="0"
@@ -21,16 +21,24 @@
                    BorderColor="DarkSlateGrey"
                    BackgroundColor="Beige">
                 
-                <Label Text="Current Location"                       
+                <Label Text="My Location"                       
                        FontSize="Default"/>
 
+
+                <Frame.GestureRecognizers>
+
+                    <TapGestureRecognizer x:Name="TapLocation"
+                                          Tapped="TapLocation_Tapped"/>
+
+                </Frame.GestureRecognizers>
             </Frame>
             
                 <!--Search icon to allow search for country or city-->
             <ImageButton Source="search.png"
                          HeightRequest="25"
                          WidthRequest="25"
-                         HorizontalOptions="EndAndExpand"/>
+                         HorizontalOptions="EndAndExpand"
+                         Clicked="ImageButton_Clicked"/>
             
         </StackLayout>
         

@@ -19,14 +19,58 @@ public partial class WeatherPage : ContentPage
     {
         base.OnAppearing();
         await GetLocation();
-        var result = await ApiService.GetWeather(latitude, longitude);
+        await GetWeatherDataByLocation(latitude, longitude);
+    }
 
+
+
+    public async Task GetLocation()
+    {
+        var location = await Geolocation.GetLocationAsync();
+        latitude = location.Latitude;
+        longitude = location.Longitude;
+    }
+
+    // event for changing back to ones location after location is set elsewhere
+    private async void TapLocation_Tapped(object sender, TappedEventArgs e)
+    {
+        await GetLocation();
+        await GetWeatherDataByLocation(latitude, longitude);
+    }
+
+    public async Task GetWeatherDataByLocation(double latitude, double longitude)
+    {
+        var result = await ApiService.GetWeather(latitude, longitude);       
+        UpdateUI(result);
+    }
+
+    // search icon for entering specfic city
+    private async void ImageButton_Clicked(object sender, EventArgs e)
+    {
+        var response = await DisplayPromptAsync(title: "", message: "Search weather by City", placeholder: "Enter city name", accept: "Search", cancel: "Cancel");
+        
+        if (response != null)
+        {
+            await GetWeatherDataByCity(response);        }
+
+    }
+
+    // code for getting weather by city name user enters
+    public async Task GetWeatherDataByCity(string city)
+    {
+        var result = await ApiService.GetWeatherByCity(city);
+        UpdateUI(result);
+    }
+
+    public void UpdateUI(dynamic result)
+    {
         // loop for each item in resulting list
         foreach (var item in result.list)
         {
             // adding current item to weather list
             WeatherList.Add(item);
         }
+
         // setting the colelctionView item source to populate the weather list
         cvWeather.ItemsSource = WeatherList;
 
@@ -48,15 +92,4 @@ public partial class WeatherPage : ContentPage
         // icon to be displayed as the main in accordance to cities current weather
         ImgWeatherIcon.Source = result.list[0].weather[0].customIcon;
     }
-
-
-
-    public async Task GetLocation()
-    {
-        var location = await Geolocation.GetLocationAsync();
-        latitude = location.Latitude;
-        longitude = location.Longitude;
-    }
-
-
 }
