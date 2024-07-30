@@ -21,7 +21,9 @@
                    BorderColor="DarkSlateGrey"
                    BackgroundColor="Beige">
                 
-                <Label Text="My Location"                       
+                <Label Text="My Location"
+                       TextColor="Black"
+                       FontAttributes="Bold"
                        FontSize="Default"/>
 
 
@@ -68,8 +70,8 @@
         <Image Grid.Row="2"
                x:Name="ImgWeatherIcon"
                VerticalOptions="Start"
-               HeightRequest="300"
-               WidthRequest="300"/>
+               HeightRequest="250"
+               WidthRequest="250"/>
 
 
         <!-- ====== SECTION 4: COLLECTION OF TEMP ====== -->

@@ -27,8 +27,16 @@ public partial class WeatherPage : ContentPage
     public async Task GetLocation()
     {
         var location = await Geolocation.GetLocationAsync();
-        latitude = location.Latitude;
-        longitude = location.Longitude;
+
+        if (location != null)
+        {
+            latitude = location.Latitude;
+            longitude = location.Longitude;
+        }
+        else
+        {
+            Console.WriteLine("Failed to retrieve weather information.");
+        }
     }
 
     // event for changing back to ones location after location is set elsewhere
@@ -42,6 +50,12 @@ public partial class WeatherPage : ContentPage
     {
         var result = await ApiService.GetWeather(latitude, longitude);       
         UpdateUI(result);
+
+        if (result == null || result.list == null || result.list.Count == 0)
+        {
+            Console.WriteLine("Failed to retrieve weather information.");
+            return;
+        }
     }
 
     // search icon for entering specfic city
@@ -59,11 +73,20 @@ public partial class WeatherPage : ContentPage
     public async Task GetWeatherDataByCity(string city)
     {
         var result = await ApiService.GetWeatherByCity(city);
+
+        if (result == null || result.list == null || result.list.Count == 0)
+        {
+            Console.WriteLine("Failed to retrieve weather information.");
+            return;
+        }
+
         UpdateUI(result);
     }
 
     public void UpdateUI(dynamic result)
     {
+        WeatherList.Clear();
+
         // loop for each item in resulting list
         foreach (var item in result.list)
         {
@@ -75,7 +98,7 @@ public partial class WeatherPage : ContentPage
         cvWeather.ItemsSource = WeatherList;
 
         // will display the city in accordance to location --> using x:name given in xaml file
-        CityLbl.Text = result.city.name;
+        CityLbl.Text = result.city?.name;
 
         // will display the weather dynamically in accoradance to given location
         WeatherDescriptionLbl.Text = result.list[0].weather[0].description;
@@ -84,12 +107,12 @@ public partial class WeatherPage : ContentPage
         TempLbl.Text = result.list[0].main.temperature + "°C";
 
         // will display the current humidity level
-        HumidityLbl.Text = result.list[0].main.humidity + "%";
+        HumidityLbl.Text = result.list[0].main?.humidity + "%";
 
         // displays the given locations wind speed in kilometers
-        WindLbl.Text = result.list[0].wind.speed + " km/h";
+        WindLbl.Text = result.list[0].wind?.speed + " km/h";
 
         // icon to be displayed as the main in accordance to cities current weather
-        ImgWeatherIcon.Source = result.list[0].weather[0].customIcon;
+        ImgWeatherIcon.Source = result.list[0].weather[0]?.customIcon;
     }
 }
