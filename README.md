@@ -15,7 +15,16 @@ The application should cover the following details:
 • Fetching weather data based on city name instead of lat/long <br>
 <br><br>
 
+# Required Nugets
+• Newtonsoft.Json<br>
+• UtcTimeLibrary
+<br><br>
+
 # Tutorial
 <strong>Asdend Yar</strong><br>
 https://www.youtube.com/watch?v=3M2ckIi896s
 <br><br>
+
+# API
+<strong>Open Weather Map</strong><br>
+https://openweathermap.org/
